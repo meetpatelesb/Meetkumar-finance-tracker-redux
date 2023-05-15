@@ -5,24 +5,32 @@ import { formatter } from "../../../utils/helper";
 import { MonthArr, paginationCount } from "../../../utils/constant";
 import { Dropdown } from "../../../components/Dropdown";
 import Pagination from "../../../components/Pagination";
-import { useTransactionData } from "../../../context/transactionTable";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector,useDispatch } from "react-redux";
+import { deleteTransaction } from "../../../Redux/ducks/counterSlice";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import { useTransactionData } from "../";
 
 const Table = (props) => {
-  const { transactionData, setTransactionData } = useTransactionData();
-  //context data
 
-  // context data
+  // redux data ....
+  const reduxData = useSelector((data)=>
+  data.meet
+  )
+
+
+// dispatch redux
+  const dispatch = useDispatch();
+
+
+
 
   const [sortedData, setSortedData] = useState(props.records);
   const [sortedField, setSortedField] = useState({});
   useEffect(() => {
     setSortedData(props.records);
   }, [props.records]);
-  // const { transactionData, setTransactionData } = useTransactionData();
 
   const sorting = (key) => {
     setCurrentPage(1);
@@ -36,7 +44,7 @@ const Table = (props) => {
     ) {
       direction = "normal";
     }
-    console.log(key, direction, ">>>>>>>>>>>>>>>>");
+
     setSortedField({ key, direction });
   };
 
@@ -163,9 +171,8 @@ const Table = (props) => {
 
   const deleteData = (id) => {
     differ();
-    const deleteData = [...transactionData];
-    const deletedData = deleteData.filter((value) => value.id !== parseInt(id));
-    setTransactionData(deletedData);
+    // dispatch method with id
+   dispatch(deleteTransaction({id:id}))
     setCurrentPage(1);
   };
 

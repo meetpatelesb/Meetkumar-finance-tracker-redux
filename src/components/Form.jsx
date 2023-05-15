@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useTransactionData } from "../context/transactionTable";
 import {
   MonthArr,
   TransactionTypeArr,
@@ -15,6 +14,8 @@ import { Dropdown } from "./Dropdown";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useSelector,useDispatch } from "react-redux";
+import {addTransaction, updateTransaction} from "../Redux/ducks/counterSlice"
 let info = {
   monthYear: {},
   transactionDate: {},
@@ -29,16 +30,22 @@ let info = {
 const TransactionForm = () => {
   const { id } = useParams();
   const index = id - 1;
-  // const updateData = JSON.parse(localStorage.getItem("transactionForm"));
 
-  // context data
-  const { transactionData, setTransactionData } = useTransactionData([]);
-  const updateData = transactionData;
+  // redux data.....
+  const reduxData = useSelector((data) => data.meet);
+  const dispatch = useDispatch();
+
+  const [transactionData, setTransactionData] = useState(reduxData);
+
+
+
+  const updateData = [...transactionData];
+  
   const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState(info);
 
-  //
+  
   // YUP VALIDATIONS...
 
   const formSchema = yup.object().shape({
@@ -183,9 +190,10 @@ const TransactionForm = () => {
       },
     }));
 
-    // setData(data);
+    
     setData(data); // context data
     setSubmit(true);
+  
   };
   const handleChange = (e) => {
     let receiptPhoto;
@@ -208,30 +216,22 @@ const TransactionForm = () => {
   useEffect(() => {
     if (submit) {
       if (transactionData.length !== 0) {
-        const retrivedata = transactionData;
-
+        const retrivedata = [...transactionData];
         if (id) {
-          for (const e in retrivedata) {
-            if (parseInt(retrivedata[e].id) === parseInt(id)) {
-              data["id"] = id;
-              retrivedata[e] = data;
-            }
-          }
+              dispatch(updateTransaction({ updateData: data,id:id }));
         } else {
           const prevDataIndex = Object.keys(retrivedata).length - 1;
           const prevId = retrivedata[prevDataIndex]["id"];
           data["id"] = parseInt(parseInt(prevId) + 1);
 
-          retrivedata.push(data);
+            dispatch(addTransaction({ data }));
         }
-        setTransactionData(retrivedata);
-        // localStorage.setItem("transactionForm", JSON.stringify(retrivedata));
+      
       } else {
         data["id"] = parseInt(1);
         // transactionData.push(data);   //secong approach
         setTransactionData((prev) => [...prev, data]);
-
-        // localStorage.setItem("transactionForm", JSON.stringify([data]));
+          dispatch(addTransaction({ data }));
       }
 
       navigate("/transaction");
