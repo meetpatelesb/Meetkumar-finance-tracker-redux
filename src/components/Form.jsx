@@ -14,8 +14,8 @@ import { Dropdown } from "./Dropdown";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useSelector,useDispatch } from "react-redux";
-import {addTransaction, updateTransaction} from "../Redux/ducks/counterSlice"
+import { useSelector, useDispatch } from "react-redux";
+import { addTransaction, updateTransaction } from "../Redux/ducks/counterSlice";
 let info = {
   monthYear: {},
   transactionDate: {},
@@ -37,15 +37,12 @@ const TransactionForm = () => {
 
   const [transactionData, setTransactionData] = useState(reduxData);
 
-
-
   const updateData = [...transactionData];
-  
+
   const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState(info);
 
-  
   // YUP VALIDATIONS...
 
   const formSchema = yup.object().shape({
@@ -190,10 +187,8 @@ const TransactionForm = () => {
       },
     }));
 
-    
     setData(data); // context data
     setSubmit(true);
-  
   };
   const handleChange = (e) => {
     let receiptPhoto;
@@ -218,20 +213,19 @@ const TransactionForm = () => {
       if (transactionData.length !== 0) {
         const retrivedata = [...transactionData];
         if (id) {
-              dispatch(updateTransaction({ updateData: data,id:id }));
+          dispatch(updateTransaction({ updateData: data, id: id }));
         } else {
           const prevDataIndex = Object.keys(retrivedata).length - 1;
           const prevId = retrivedata[prevDataIndex]["id"];
           data["id"] = parseInt(parseInt(prevId) + 1);
 
-            dispatch(addTransaction({ data }));
+          dispatch(addTransaction({ data }));
         }
-      
       } else {
         data["id"] = parseInt(1);
         // transactionData.push(data);   //secong approach
         setTransactionData((prev) => [...prev, data]);
-          dispatch(addTransaction({ data }));
+        dispatch(addTransaction({ data }));
       }
 
       navigate("/transaction");

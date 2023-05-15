@@ -15,8 +15,6 @@ const Transaction = () => {
   const [groupby, setGroupby] = useState({});
 
   useEffect(() => {
-    console.log("transa>>>>>>");
-
     setTransactionDatas(reduxData);
   }, [reduxData]);
 
