@@ -5,14 +5,18 @@ import * as yup from "yup";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../Redux/ducks/registrationSlice";
 
 const Registration = () => {
   const navigate = useNavigate();
-  let [regData, setRegData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+
+  // redux data ....
+  const reduxUserData = useSelector((data) => data.userData);
+  console.log(reduxUserData);
+  // dispatch redux
+  const dispatch = useDispatch();
+  let [regData, setRegData] = useState(reduxUserData);
 
   const [issubmit, setIsSubmit] = useState(false);
 
@@ -39,22 +43,23 @@ const Registration = () => {
   // ......
 
   const onSubmit = (e) => {
-     regData = { ...e };
+    regData = { ...e };
     delete regData.cpassword;
     setRegData(regData);
     setIsSubmit(true);
-    if (Object.values(e).length && issubmit===true) {
-      if (localStorage.getItem("registration")) {
-        const retrivedata = JSON.parse(localStorage.getItem("registration"));
+   
+    if (Object.values(e).length && issubmit === true) {
+      if (Object.keys(reduxUserData).length) {
+        const retrivedata = [...reduxUserData];
         let lastIdIndex = Object.keys(retrivedata).length - 1;
         let lastId = retrivedata[lastIdIndex].id;
         regData["id"] = lastId + 1;
-        retrivedata.push(regData);
-        localStorage.setItem("registration", JSON.stringify(retrivedata));
-      } else {
+        
+        dispatch(addUser({ regData }));
+        } else {
         regData["id"] = 1;
-        localStorage.setItem("registration", JSON.stringify([regData]));
-      }
+         dispatch(addUser({ regData }));
+         }
       navigate("/login");
     } else {
       console.log("error existed");

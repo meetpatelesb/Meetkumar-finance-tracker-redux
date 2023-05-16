@@ -1,9 +1,9 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice, current, combineReducers } from "@reduxjs/toolkit";
 import { defaultTransactionData } from "../../utils/constant";
 const initialState = defaultTransactionData;
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const transactionSlice = createSlice({
+  name: "transaction",
   initialState,
   reducers: {
     addTransaction: (state, action) => {
@@ -29,6 +29,6 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { deleteTransaction, addTransaction, updateTransaction } =
-  counterSlice.actions;
+  transactionSlice.actions;
 
-export default counterSlice.reducer;
+export default transactionSlice.reducer;

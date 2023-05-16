@@ -4,15 +4,19 @@ import Table from "../pages/transaction/compomnents/Table";
 import { Dropdown } from "../components/Dropdown";
 import { groupArr } from "../utils/constant";
 import { useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { Cookies } from "react-cookie";
 
 const Transaction = () => {
   const navigate = useNavigate();
-   const reduxData = useSelector((data) => data.meet);
 
+  // redux data
+   const reduxData = useSelector((data) => data.meet);
   const [transactionDatas, setTransactionDatas] = useState(reduxData);
-  // const retrivedata = [...transactionDatas;
+
   const [groupby, setGroupby] = useState({});
+  // Cookies 
+   const cookieM = new Cookies();
 
   useEffect(() => {
     setTransactionDatas(reduxData);
@@ -49,7 +53,6 @@ const Transaction = () => {
       }
     } else {
       if (e) {
-        console.log(e, "GEROERT>>>>>>>>>>>>>>");
         gData.forEach((items) => {
           const item = items[e]?.value;
           groupData[item] = groupData[item] ?? [];
@@ -61,7 +64,9 @@ const Transaction = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem("logindata");
+    // localStorage.removeItem("logindata");
+      cookieM.remove("tempdata", { path: "/" });
+      window.location.reload();
     navigate("/public/login");
   };
 

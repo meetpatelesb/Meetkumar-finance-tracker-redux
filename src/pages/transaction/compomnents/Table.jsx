@@ -6,25 +6,18 @@ import { MonthArr, paginationCount } from "../../../utils/constant";
 import { Dropdown } from "../../../components/Dropdown";
 import Pagination from "../../../components/Pagination";
 import toast, { Toaster } from "react-hot-toast";
-import { useSelector,useDispatch } from "react-redux";
-import { deleteTransaction } from "../../../Redux/ducks/counterSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteTransaction } from "../../../Redux/ducks/transactionSlice";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import { useTransactionData } from "../";
 
 const Table = (props) => {
-
   // redux data ....
-  const reduxData = useSelector((data)=>
-  data.meet
-  )
+  const reduxData = useSelector((data) => data.meet);
 
-
-// dispatch redux
+  // dispatch redux
   const dispatch = useDispatch();
-
-
-
 
   const [sortedData, setSortedData] = useState(props.records);
   const [sortedField, setSortedField] = useState({});
@@ -172,7 +165,7 @@ const Table = (props) => {
   const deleteData = (id) => {
     differ();
     // dispatch method with id
-   dispatch(deleteTransaction({id:id}))
+    dispatch(deleteTransaction({ id: id }));
     setCurrentPage(1);
   };
 
@@ -287,10 +280,11 @@ const Table = (props) => {
                   </Link>
                 </td>
                 <td>
-                  <i
-                    class="fas fa-trash-alt"
-                    onClick={() => deleteData(transaction?.id)}
-                  ></i>
+                  {/* <i
+                    // class="fas fa-trash-alt"
+                    
+                  ></i> */}
+                  <span onClick={() => deleteData(transaction?.id)}>D</span>
                 </td>
               </tr>
             ))}

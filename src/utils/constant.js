@@ -45,6 +45,14 @@ export const validFileExtensions = [
   "image/jpg",
   "image/svg",
 ];
+export const userData = [
+  {
+    name: "meet",
+    id:1,
+    email: "meet@gmail.com",
+    password: "Meet@123",
+  },
+];
 
 export const defaultTransactionData = [
   {

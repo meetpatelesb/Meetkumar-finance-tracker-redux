@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterSlice from "./ducks/counterSlice";
+import transactionSlice from "./ducks/transactionSlice";
+import registrationSlice from "./ducks/registrationSlice";
+import loginSlice from "./ducks/loginSlice";
 
 export const store = configureStore({
   reducer: {
-  meet: counterSlice,
+    meet: transactionSlice,
+    userData: registrationSlice,
+    loginData:loginSlice
   },
 });
 

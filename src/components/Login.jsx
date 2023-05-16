@@ -5,9 +5,18 @@ import { result } from "../utils/helper";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
+
 
 const Login = () => {
-  const registrationData = JSON.parse(localStorage.getItem("registration"));
+
+  // redux data ....
+  const reduxUserData = useSelector((data) => data.userData);
+  const registrationData = [...reduxUserData]
+  
+  // cookies set
+  const [cookies, setCookie] = useCookies(["userLogin"]);
 
   const navigate = useNavigate();
   let [loginData, setRegData] = useState({});
@@ -29,7 +38,7 @@ const Login = () => {
   });
 
   const onSubmit = async (e) => {
-     loginData = { ...e };
+    loginData = { ...e };
     setRegData(loginData);
 
     // useeffect
@@ -62,8 +71,12 @@ const Login = () => {
       }
 
       if (flag === true) {
-        loginData["token"] = result;
-        localStorage.setItem("logindata", JSON.stringify(loginData));
+        // setCookie("Name", result, { path: "/" });
+          setCookie(
+            "tempdata",
+            { email: loginData["email"], token: result },
+            { path: "/", maxAge: 3600 }
+          );
         navigate("/transaction");
       }
     }
