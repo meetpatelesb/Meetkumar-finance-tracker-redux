@@ -5,11 +5,9 @@ import { useEffect } from 'react';
 import { Cookies } from 'react-cookie';
 
 const Unauth = () => {
-  // const token = JSON.parse(localStorage.getItem("logindata"));
   const navigate = useNavigate();
   const cookie = new Cookies();
   const token = cookie.get("tempdata");
-  console.log(token);
   useEffect(()=>{
     if (token) {
       navigate("/transaction");

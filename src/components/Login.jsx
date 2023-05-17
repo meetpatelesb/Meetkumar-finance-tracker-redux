@@ -75,7 +75,7 @@ const Login = () => {
           setCookie(
             "tempdata",
             { email: loginData["email"], token: result },
-            { path: "/", maxAge: 3600 }
+            { path: "/", maxAge: 900 }
           );
         navigate("/transaction");
       }

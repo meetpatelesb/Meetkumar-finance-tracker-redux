@@ -7,11 +7,9 @@ import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
 
 const Auth = () => {
-  // const token = JSON.parse(localStorage.getItem("logindata"));
 
   const cookie = new Cookies();
   const token = cookie.get("tempdata");
-  console.log(token);
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) {

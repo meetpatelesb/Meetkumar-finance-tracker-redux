@@ -23,6 +23,7 @@ const Table = (props) => {
   const [sortedField, setSortedField] = useState({});
   useEffect(() => {
     setSortedData(props.records);
+    setCurrentPage(1);
   }, [props.records]);
 
   const sorting = (key) => {
@@ -280,11 +281,11 @@ const Table = (props) => {
                   </Link>
                 </td>
                 <td>
-                  {/* <i
-                    // class="fas fa-trash-alt"
-                    
-                  ></i> */}
-                  <span onClick={() => deleteData(transaction?.id)}>D</span>
+                  <i
+                    class="fas fa-trash-alt"
+                    onClick={() => deleteData(transaction?.id)}
+                  ></i>
+                 
                 </td>
               </tr>
             ))}
