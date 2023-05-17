@@ -8,11 +8,9 @@ export const registrationSlice = createSlice({
   reducers: {
     addUser: (state, action) => {
       const { regData } = action.payload;
-      if (state.length === 0) {
-        return (state = regData);
-      } else {
+     
         state.push(regData);
-      }
+      
     },
   },
 });

@@ -12,10 +12,14 @@ export const transactionSlice = createSlice({
     },
     updateTransaction: (state, action) => {
       const { updateData, id } = action.payload;
-      const index = state
+
+      const clone = [...state];
+      const index = clone
         .map((item) => item)
         .findIndex((trans) => trans.id == id);
-      state[index] = updateData;
+      clone[index] = updateData;
+
+      return clone
       // state[id-1] = updateData;
     },
     deleteTransaction: (state, action) => {

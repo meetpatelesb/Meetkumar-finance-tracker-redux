@@ -25,7 +25,6 @@ const Transaction = () => {
   const [groupVal, setGroupVal] = useState("");
 
   useEffect(() => {
-    console.log("render effect");
     groupBy(groupVal);
   }, [transactionDatas]);
 
@@ -37,7 +36,6 @@ const Transaction = () => {
       if (transactionDatas) {
         let field = e.target.value;
         setGroupVal(field);
-        console.log(field, "field");
 
         if (field === "none") {
           setGroupby(groupData);

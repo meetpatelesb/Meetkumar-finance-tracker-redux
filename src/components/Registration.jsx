@@ -13,7 +13,7 @@ const Registration = () => {
 
   // redux data ....
   const reduxUserData = useSelector((data) => data.userData);
-  console.log(reduxUserData);
+
   // dispatch redux
   const dispatch = useDispatch();
   let [regData, setRegData] = useState(reduxUserData);

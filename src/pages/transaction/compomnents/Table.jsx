@@ -14,7 +14,7 @@ import { deleteTransaction } from "../../../Redux/ducks/transactionSlice";
 
 const Table = (props) => {
   // redux data ....
-  const reduxData = useSelector((data) => data.meet);
+  // const reduxData = useSelector((data) => data.meet);
 
   // dispatch redux
   const dispatch = useDispatch();
@@ -111,7 +111,6 @@ const Table = (props) => {
           return sortedField.direction === "ascending" ? 1 : -1;
         }
         setSortedData(newData);
-        // console.log(newData);
         return 0;
       });
     }
